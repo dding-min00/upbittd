@@ -39,20 +39,82 @@ print("autotrade start")
 while True:
     try:
         now = datetime.datetime.now()
-        start_time = get_start_time("KRW-BTC")
+        start_time = get_start_time("KRW-ETC")
         end_time = start_time + datetime.timedelta(days=1)
+        buybit_ETC = 0
+        buybit_XRP = 0
+        buybit_BTG = 0
+        buybit_BCH = 0
+        buybit_BCHA = 0
 
         if start_time < now < end_time - datetime.timedelta(seconds=10):
-            target_price = get_target_price("KRW-BTC", 0.5)
-            current_price = get_current_price("KRW-BTC")
-            if target_price < current_price:
+            target_price_ETC = get_target_price("KRW-ETC", 0.6)
+            current_price_ETC = get_current_price("KRW-ETC")
+
+            target_price_XRP = get_target_price("KRW-XRP", 0.6)
+            current_price_XRP = get_current_price("KRW-XRP")
+
+            target_price_BTG = get_target_price("KRW-BTG", 0.6)
+            current_price_BTG = get_current_price("KRW-BTG")
+
+            target_price_BCH = get_target_price("KRW-BCH", 0.6)
+            current_price_BCH = get_current_price("KRW-BCH")
+
+            target_price_BCHA = get_target_price("KRW-BCHA", 0.6)
+            current_price_BCHA = get_current_price("KRW-BCHA")
+
+            if target_price_ETC < current_price_ETC:
                 krw = get_balance("KRW")
                 if krw > 5000:
-                    upbit.buy_market_order("KRW-BTC", krw*0.9995)
+                    if buybit_ETC == 0:
+                        upbit.buy_market_order("KRW-ETC", krw*0.9995*0.2)
+                        buybit_ETC = 1
+
+            if target_price_XRP < current_price_XRP:
+                krw = get_balance("KRW")
+                if krw > 5000:
+                    if buybit_XRP == 0:
+                        upbit.buy_market_order("KRW-XRP", krw*0.9995*0.2)
+                        buybit_XRP = 1
+
+            if target_price_BTG < current_price_BTG:
+                krw = get_balance("KRW")
+                if krw > 5000:
+                    if buybit_BTG == 0:
+                        upbit.buy_market_order("KRW-BTG", krw*0.9995*0.2)
+                        buybit_BTG = 1
+
+            if target_price_BCH < current_price_BCH:
+                krw = get_balance("KRW")
+                if krw > 5000:
+                    if buybit_BCH == 0:
+                        upbit.buy_market_order("KRW-BCH", krw*0.9995*0.2)
+                        buybit_BCH = 1
+
+            if target_price_BCHA < current_price_BCHA:
+                krw = get_balance("KRW")
+                if krw > 5000:
+                    if buybit_BCHA == 0:
+                        upbit.buy_market_order("KRW-BCHA", krw*0.9995*0.2)
+                        buybit_BCHA = 1
+
         else:
-            btc = get_balance("BTC")
+            btc = get_balance("ETC")
+            p_xrp = get_balance("XRP")
+            p_btg = get_balance("BTG")
+            p_bch = get_balance("BCH")
+            P_bcha = get_balance("BCHA")
             if btc > 0.00008:
-                upbit.sell_market_order("KRW-BTC", btc*0.9995)
+                upbit.sell_market_order("KRW-ETC", btc*0.9995)
+            if p_xrp > 0.00008:
+                upbit.sell_market_order("KRW-XRP", btc*0.9995)
+            if p_btg > 0.00008:
+                upbit.sell_market_order("KRW-BTG", btc*0.9995)
+            if p_bch > 0.00008:
+                upbit.sell_market_order("KRW-BCH", btc*0.9995)
+            if P_bcha > 0.00008:
+                upbit.sell_market_order("KRW-BCHA", btc*0.9995)
+
         time.sleep(1)
     except Exception as e:
         print(e)
