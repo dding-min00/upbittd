@@ -39,6 +39,7 @@ buybit_XRP = 0
 buybit_BTG = 0
 buybit_BCH = 0
 buybit_BCHA = 0
+k = 0.6
 # 자동매매 시작
 while True:
     try:
@@ -47,19 +48,19 @@ while True:
         end_time = start_time + datetime.timedelta(days=1)
 
         if start_time < now < end_time - datetime.timedelta(seconds=10):
-            target_price_ETC = get_target_price("KRW-ETC", 0.6)
+            target_price_ETC = get_target_price("KRW-ETC", k)
             current_price_ETC = get_current_price("KRW-ETC")
 
-            target_price_XRP = get_target_price("KRW-XRP", 0.6)
+            target_price_XRP = get_target_price("KRW-XRP", k)
             current_price_XRP = get_current_price("KRW-XRP")
 
-            target_price_BTG = get_target_price("KRW-BTG", 0.6)
+            target_price_BTG = get_target_price("KRW-BTG", k)
             current_price_BTG = get_current_price("KRW-BTG")
 
-            target_price_BCH = get_target_price("KRW-BCH", 0.6)
+            target_price_BCH = get_target_price("KRW-BCH", k)
             current_price_BCH = get_current_price("KRW-BCH")
 
-            target_price_BCHA = get_target_price("KRW-BCHA", 0.6)
+            target_price_BCHA = get_target_price("KRW-BCHA", k)
             current_price_BCHA = get_current_price("KRW-BCHA")
 
             if target_price_ETC < current_price_ETC:
@@ -98,25 +99,25 @@ while True:
                         buybit_BCHA = 1
 
         else:
-            btc = get_balance("ETC")
+            p_btc = get_balance("ETC")
             p_xrp = get_balance("XRP")
             p_btg = get_balance("BTG")
             p_bch = get_balance("BCH")
             P_bcha = get_balance("BCHA")
-            if btc > 0.00008:
-                upbit.sell_market_order("KRW-ETC", btc*0.9995)
+            if p_btc > 0.00008:
+                upbit.sell_market_order("KRW-ETC", p_btc*0.9995)
                 buybit_ETC = 0
             if p_xrp > 0.00008:
-                upbit.sell_market_order("KRW-XRP", btc*0.9995)
+                upbit.sell_market_order("KRW-XRP", p_xrp*0.9995)
                 buybit_XRP = 0
             if p_btg > 0.00008:
-                upbit.sell_market_order("KRW-BTG", btc*0.9995)
+                upbit.sell_market_order("KRW-BTG", p_btg*0.9995)
                 buybit_BTG = 0
             if p_bch > 0.00008:
-                upbit.sell_market_order("KRW-BCH", btc*0.9995)
+                upbit.sell_market_order("KRW-BCH", p_bch*0.9995)
                 buybit_BCH = 0
             if P_bcha > 0.00008:
-                upbit.sell_market_order("KRW-BCHA", btc*0.9995)
+                upbit.sell_market_order("KRW-BCHA", p_bcha*0.9995)
                 buybit_BCHA = 0
 
         time.sleep(1)
